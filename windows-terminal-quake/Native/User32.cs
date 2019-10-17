@@ -102,6 +102,9 @@ namespace WindowsTerminalQuake.Native
         [DllImport("kernel32.dll")]
         public static extern uint GetCurrentThreadId();
 
+        [DllImport("user32.dll", SetLastError = true)]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        public static extern bool GetWindowPlacement(IntPtr hWnd, ref WINDOWPLACEMENT lpwndpl);
 
         public struct Rect
         {
@@ -116,6 +119,8 @@ namespace WindowsTerminalQuake.Native
         public const int WS_EX_APPWINDOW = 0x00040000, WS_EX_TOOLWINDOW = 0x00000080;
         public const uint EVENT_OBJECT_LOCATIONCHANGE = 0x800B;
         public const uint WINEVENT_OUTOFCONTEXT = 0x0000;
+
+        public const uint SW_SHOWMINIMIZED = 2;
 
         [StructLayout(LayoutKind.Sequential)]
         public struct MSG
@@ -139,6 +144,16 @@ namespace WindowsTerminalQuake.Native
                 this.X = x;
                 this.Y = y;
             }
+        }
+
+        public struct WINDOWPLACEMENT
+        {
+            public int length;
+            public int flags;
+            public int showCmd;
+            public System.Drawing.Point ptMinPosition;
+            public System.Drawing.Point ptMaxPosition;
+            public System.Drawing.Rectangle rcNormalPosition;
         }
     }
 

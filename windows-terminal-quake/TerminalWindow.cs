@@ -127,7 +127,8 @@ namespace WindowsTerminalQuake
         {
             return Top <= 0;
         }
-        public void EnsureVisible()
+
+public void EnsureVisible()
         {
             if (Height <= MinHeight || Width <= MinWidth) {
                 // ensure visible if it got hidden
@@ -152,5 +153,7 @@ namespace WindowsTerminalQuake
                 Width = _bounds.Width;
             }
         }
+
+
     }
 }

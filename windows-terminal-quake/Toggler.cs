@@ -83,7 +83,8 @@ namespace WindowsTerminalQuake
         {
             SaveTerminalState(terminalWindow);
 
-            if (terminalWindow.Top > 0)
+            // if the window isn't docked then 
+            if (!terminalWindow.IsDocked())
             {
                 HideProcessWindow();
                 return;
@@ -133,10 +134,12 @@ namespace WindowsTerminalQuake
                 terminalWindow.ScreenY - terminalWindow.Height,
                 terminalWindow.Width,
                 terminalWindow.Height,
-                false
+                true
             );
 
+            // todo - this flashes the window at it's prior position if it was minimized.
             User32.ShowWindow(process.MainWindowHandle, NCmdShow.RESTORE);
+            
             User32.SetForegroundWindow(process.MainWindowHandle);
 
             var stepSize = (double)config.Height / (double)stepCount;
@@ -177,6 +180,14 @@ namespace WindowsTerminalQuake
 
         private void SaveTerminalState(TerminalWindow terminalWindow)
         {
+            var placement = new User32.WINDOWPLACEMENT();
+            if (User32.GetWindowPlacement(process.MainWindowHandle, ref placement))
+            {
+                if (placement.showCmd == User32.SW_SHOWMINIMIZED)
+                {
+                    return;
+                }
+            }
             config.Width = terminalWindow.Width;
             config.Height = terminalWindow.Height;
             config.OffsetLeft = terminalWindow.Left;

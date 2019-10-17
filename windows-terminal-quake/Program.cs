@@ -22,6 +22,12 @@ namespace WindowsTerminalQuake
             _config = new Config();
             _config.Reload();
 
+            if (_config.Width < 200 || _config.Height < 40)
+            {
+                _config.Width = 0;
+                _config.Height = 0;
+            }
+
             // don't allow more than one instance to be running simultaneously
             var existingProcesses = Process.GetProcessesByName("windows-terminal-quake");
             if (existingProcesses.Count() > 1)
@@ -140,17 +146,24 @@ namespace WindowsTerminalQuake
         }
         private static Process CreateWindowsTerminalProcess()
         {
-            var process = new Process
+            var startInfo = new ProcessStartInfo
             {
-                StartInfo = new ProcessStartInfo
-                {
-                    FileName = "wt",
-                    UseShellExecute = false,
-                    RedirectStandardOutput = true,
-                    WindowStyle = ProcessWindowStyle.Hidden,
-                }
+                FileName = "wt",
+                UseShellExecute = false,
+                RedirectStandardOutput = true,
+                WindowStyle = ProcessWindowStyle.Hidden,
+                Verb = "runas"
             };
-            process.Start();
+            Process process;
+            try
+            {
+                process = Process.Start(startInfo);
+            }
+            catch (Exception)
+            {
+                startInfo.Verb = "";
+                process = Process.Start(startInfo);
+            }
             while (process.MainWindowTitle == "" || process.MainWindowTitle == "DesktopWindowXamlSource")
             {
                 Thread.Sleep(10);
