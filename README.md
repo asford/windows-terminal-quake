@@ -1,5 +1,5 @@
 # windows-terminal-quake
-Companion program for the new Windows Terminal that enables Quake-style drop down
+Companion program for the new Windows Terminal that enables Quake-style drop down. Forked from original work by [flyingpie](https://github.com/flyingpie/windows-terminal-quake)
 
 ![Preview](https://files.flyingpie.nl/windows-terminal-quake.gif)
 
@@ -14,7 +14,15 @@ There are a couple of options:
 - Clone/download the source and run **build.ps1**.
 - Clone/download the source and build using Visual Studio.
 
-## Options
+## Features
 
-- Command line option "maximize" to always maximize the terminal window
-- Command line option "center" to always center the terminal window horizontally
+- Persists window dimensions between sessions
+- Pressing hotkey when terminal window is not foreground will bring it to foreground; otherwise it will "slide out"
+- Pressing hotkey when terminal window is minimized will "slide in"
+- Relaunching `windows-terminal-quake` will also give focus to active terminal window
+
+## Known issues/limitations
+
+- Some minor flicker when restoring window after a "minimize"
+- Should support features like "fit width", hover, etc
+- Probably will not be improved much except to fix really bad bugs, since it's expected that Windows Terminal will probably natively support this/similar much-requested feature
