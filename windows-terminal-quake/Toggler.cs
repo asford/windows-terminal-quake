@@ -48,7 +48,6 @@ namespace WindowsTerminalQuake
             User32.SetForegroundWindow(_process.MainWindowHandle);
 
             HotKeyManager.RegisterHotKey(Keys.Oemtilde, KeyModifiers.Alt);
-
             HotKeyManager.HotKeyPressed += handleHotKeyPressed;
         }
 

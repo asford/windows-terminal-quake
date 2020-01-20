@@ -49,6 +49,7 @@ namespace WindowsTerminalQuake
             {
                 Close();
             };
+
             AppDomain.CurrentDomain.UnhandledException += (sender, e) =>
             {
                 WriteToLog(e.ToString());

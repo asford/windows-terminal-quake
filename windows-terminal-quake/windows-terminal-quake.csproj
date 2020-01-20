@@ -5,8 +5,9 @@
     <OutputPath>bin</OutputPath>
     <OutputType>WinExe</OutputType>
     <TargetFramework>net472</TargetFramework>
-    <ApplicationIcon />
+    <ApplicationIcon>UI\terminal.ico</ApplicationIcon>
     <StartupObject />
+    <RootNamespace>WindowsTerminalQuake</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>

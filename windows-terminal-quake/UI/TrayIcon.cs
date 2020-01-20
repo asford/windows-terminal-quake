@@ -19,7 +19,7 @@ namespace WindowsTerminalQuake.UI
                 var contextMenu = new ContextMenu();
 
                 // Exit
-                var mnuExit = new MenuItem("Exit");
+                var mnuExit = new MenuItem(_Resources.Exit);
                 mnuExit.Click += new EventHandler(exitHandler);
 
                 contextMenu.MenuItems.AddRange(new[]
@@ -61,7 +61,7 @@ namespace WindowsTerminalQuake.UI
 
         private static Icon CreateIcon()
         {
-            var bitmap = _Resources.icon.ToBitmap();
+            var bitmap = _Resources.terminal.ToBitmap();
             bitmap.MakeTransparent(Color.White);
             var icH = bitmap.GetHicon();
             var ico = Icon.FromHandle(icH);

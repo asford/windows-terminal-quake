@@ -38,7 +38,7 @@ namespace WindowsTerminalQuake.Native
 
         private static void OnHotKeyPressed(HotKeyEventArgs e)
         {
-            HotKeyManager.HotKeyPressed?.Invoke(null, e);
+            HotKeyPressed?.Invoke(null, e);
         }
 
         private static volatile MessageWindow _wnd;
@@ -50,6 +50,7 @@ namespace WindowsTerminalQuake.Native
             Thread messageLoop = new Thread(delegate ()
             {
                 Application.Run(new MessageWindow());
+                Environment.Exit(0);
             });
             messageLoop.Name = "MessageLoopThread";
             messageLoop.IsBackground = true;
