@@ -5,6 +5,8 @@ using System.Windows.Forms;
 using System.Threading;
 using WindowsTerminalQuake.Native;
 using WindowsTerminalQuake.UI;
+using System.IO;
+using System.Text;
 
 namespace WindowsTerminalQuake
 {
@@ -47,6 +49,11 @@ namespace WindowsTerminalQuake
             {
                 Close();
             };
+            AppDomain.CurrentDomain.UnhandledException += (sender, e) =>
+            {
+                WriteToLog(e.ToString());
+                
+            };
 
             _trayIcon = new TrayIcon((s, a) => Close());
 
@@ -59,7 +66,7 @@ namespace WindowsTerminalQuake
                     process = CreateWindowsTerminalProcess();
                 }
                 _toggler = new Toggler(process, _config);
-                _trayIcon.Notify(ToolTipIcon.Info, $"Windows Terminal Quake is running, press CTRL+~ or CTRL+Q to toggle.");
+                _trayIcon.Notify(ToolTipIcon.Info, $"Windows Terminal Quake is running, press Alt+~ to toggle.");
 
 
                 // capture mouse click event - can't seem to make this work
@@ -102,6 +109,26 @@ namespace WindowsTerminalQuake
                 Close();
             }
             
+        }
+
+        private static void WriteToLog(string text, ConsoleColor? color = null)
+        {
+            var oldColor = Console.ForegroundColor;
+
+            try
+            {
+                Console.ForegroundColor = color ?? oldColor;
+                using (var file = File.Open("log.txt", FileMode.OpenOrCreate, FileAccess.Write, FileShare.ReadWrite))
+                {
+                    var bytes = Encoding.UTF8.GetBytes(text);
+                    file.Write(bytes, 0, bytes.Length);
+                }
+            }
+            finally
+            {
+                Console.Out.WriteLine(text);
+                Console.ForegroundColor = oldColor;
+            }
         }
 
         private static IntPtr WinMouseEvent(int code, IntPtr wParam, IntPtr lParam)

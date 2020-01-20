@@ -47,8 +47,7 @@ namespace WindowsTerminalQuake
             User32.ShowWindow(_process.MainWindowHandle, NCmdShow.SHOW);
             User32.SetForegroundWindow(_process.MainWindowHandle);
 
-            HotKeyManager.RegisterHotKey(Keys.Oemtilde, KeyModifiers.Control);
-            HotKeyManager.RegisterHotKey(Keys.Q, KeyModifiers.Control);
+            HotKeyManager.RegisterHotKey(Keys.Oemtilde, KeyModifiers.Alt);
 
             HotKeyManager.HotKeyPressed += handleHotKeyPressed;
         }
