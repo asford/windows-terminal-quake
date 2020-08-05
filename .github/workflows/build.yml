@@ -5,9 +5,14 @@ jobs:
   build:
     runs-on: windows-latest
     steps:
-      - name: Get the sources
+      - name: Checkout
         uses: actions/checkout@v1
-      - name: Cake Action
+      - name: Build
         uses: cake-build/cake-action@v1.1.1
         with:
           target: Default
+      - name: Upload a Build Artifact
+        uses: actions/upload-artifact@v2.1.3
+        with:
+          name: windows-terminal-quake.exe
+          path: bin\windows-terminal-quake.exe
